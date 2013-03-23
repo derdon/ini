@@ -50,8 +50,8 @@ func isSection(line string) bool {
 }
 
 type Item struct {
-	property string
-	value    string
+	Property string
+	Value    string
 }
 
 // An assignment is of the form `name=value`. Whitespace before and after the
