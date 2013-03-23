@@ -8,6 +8,13 @@ Installation
 
     go get github.com/derdon/ini
 
+Updating
+--------
+
+::
+
+    go get -u github.com/derdon/ini
+
 Usage
 -----
 
