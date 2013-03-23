@@ -34,10 +34,4 @@ foo = bar`
 	for _, item := range items {
 		fmt.Printf("\tproperty: %q, value: %q\n", item.Property, item.Value)
 	}
-	fmt.Println()
-
-	// We know that both the section and the property exist,
-	// so the error value can be discarded
-	value, _ := conf.Get("another section", "foo")
-	fmt.Printf("the value of \"foo\" in \"another section\" is: %q\n", value)
 }
