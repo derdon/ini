@@ -18,7 +18,7 @@ Updating
 Usage
 -----
 
-See the Wiki at https://github.com/derdon/ini/wiki/_pages for examples and
+See the Wiki at https://github.com/derdon/ini/wiki/ for examples and
 explanations on how to use this library.
 
 ..
