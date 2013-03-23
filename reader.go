@@ -19,7 +19,7 @@ func (c *Config) HasProperty(section, property string) bool {
 		return false
 	}
 	for _, item := range items {
-		if item.property == property {
+		if item.Property == property {
 			return true
 		}
 	}
@@ -53,8 +53,8 @@ func (c *Config) Get(section, property string) (value string, err error) {
 		return value, err
 	}
 	for _, item := range items {
-		if (*item).property == property {
-			return (*item).value, nil
+		if (*item).Property == property {
+			return (*item).Value, nil
 		}
 	}
 	return value, NoPropertyError{property}

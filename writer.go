@@ -29,8 +29,8 @@ func (c *Config) RemoveProperty(section, property string) error {
 		return err
 	}
 	for _, item := range items {
-		if item.property == property {
-			delete((*c)[section], item.property)
+		if item.Property == property {
+			delete((*c)[section], item.Property)
 			return nil
 		}
 	}

@@ -101,7 +101,7 @@ func ParseINI(reader *LineReader) (*Config, error) {
 				return &conf, err
 			}
 			if section != "" {
-				conf.Set(section, item.property, item.value)
+				conf.Set(section, item.Property, item.Value)
 			} else {
 				// assignment outside a section.
 				// this is a syntax error

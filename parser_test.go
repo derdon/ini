@@ -88,16 +88,16 @@ func TestParseItemSimpleValid(t *testing.T) {
 	line := "foo=bar"
 	item, err := parseItem(line)
 	assertErrorIsNil(err, t)
-	expectProperty("foo", item.property, t)
-	expectValue("bar", item.value, t)
+	expectProperty("foo", item.Property, t)
+	expectValue("bar", item.Value, t)
 }
 
 func TestParseItemWithWhitespace(t *testing.T) {
 	line := "foo  = 	bar"
 	item, err := parseItem(line)
 	assertErrorIsNil(err, t)
-	expectProperty("foo", item.property, t)
-	expectValue("bar", item.value, t)
+	expectProperty("foo", item.Property, t)
+	expectValue("bar", item.Value, t)
 }
 
 func TestParseItemUnescapedEqualSign(t *testing.T) {
@@ -113,8 +113,8 @@ func TestParseItemWithEscapedEqualSign(t *testing.T) {
 	line := "foo = bar \\= baz"
 	item, err := parseItem(line)
 	assertErrorIsNil(err, t)
-	expectProperty("foo", item.property, t)
-	expectValue("bar \\= baz", item.value, t)
+	expectProperty("foo", item.Property, t)
+	expectValue("bar \\= baz", item.Value, t)
 }
 
 // TODO: test parseItem with quoted values!
