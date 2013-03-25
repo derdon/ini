@@ -79,7 +79,8 @@ type Config map[string]map[string]string
 // Get a new empty config. This is equivalent to:
 // 	ParseINI(NewLineReader(strings.NewReader("")))
 func NewConfig() *Config {
-	return &(make(Config))
+	c := make(Config)
+	return &c
 }
 
 // Parse the given *LineReader to a *Config. If the reader is empty, an empty
