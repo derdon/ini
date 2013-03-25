@@ -14,6 +14,7 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("Error: could not read %s. %s", filename, err))
 	}
+	defer f.Close()
 	reader := bufio.NewReader(file)
 	linereader := ini.NewLineReader(reader)
 	conf, err := ini.ParseINI(linereader)
