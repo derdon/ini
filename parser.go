@@ -18,6 +18,7 @@ type LineReader struct {
 	io.ByteReader
 }
 
+// create a new LineReader struct from any given io.ByteReader
 func NewLineReader(r io.ByteReader) *LineReader {
 	return &LineReader{r}
 }
@@ -75,6 +76,12 @@ func parseItem(line string) (item *Item, err error) {
 // a Config map maps from section names to maps of assignments
 type Config map[string]map[string]string
 
+// Parse the given *LineReader to a *Config. If the reader is empty, an empty
+// *Config and no error will be returned. Errors may occur when one assignment
+// does not belong to any section, i.e. if it was written before the first
+// section was declared. Other errors are syntax errors: Examples for syntax
+// errors are: no equals sign in an assignment, more than one unescaped equal
+// sign in an assignment.
 func ParseINI(reader *LineReader) (*Config, error) {
 	conf := make(Config)
 	var line string
@@ -94,8 +101,8 @@ func ParseINI(reader *LineReader) (*Config, error) {
 			section = strings.Trim(trimmedLine, "[]")
 			conf.AddSection(section)
 		} else {
-			// if the line is not a section, it must be an assignment
-			// otherwise it's a syntax error
+			// If the line is not a section, it must be an
+			// assignment. Otherwise it's a syntax error
 			item, err := parseItem(line)
 			if err != nil {
 				return &conf, err
