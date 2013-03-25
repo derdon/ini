@@ -76,6 +76,12 @@ func parseItem(line string) (item *Item, err error) {
 // a Config map maps from section names to maps of assignments
 type Config map[string]map[string]string
 
+// Get a new empty config. This is equivalent to:
+// 	ParseINI(NewLineReader(strings.NewReader("")))
+func NewConfig() *Config {
+	return &(make(Config))
+}
+
 // Parse the given *LineReader to a *Config. If the reader is empty, an empty
 // *Config and no error will be returned. Errors may occur when one assignment
 // does not belong to any section, i.e. if it was written before the first
