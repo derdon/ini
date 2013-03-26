@@ -36,7 +36,6 @@ func (c *Config) GetSections() (sections []string) {
 	return sections
 }
 
-
 // Get a slice of *Item structs from the given section. The order of the
 // elements in the returned slice is not determined. If the section does not
 // exist, NoSectionError is returned.
@@ -50,7 +49,6 @@ func (c *Config) GetItems(section string) (items []*Item, err error) {
 	}
 	return items, nil
 }
-
 
 // Get the value of the passed property in the given section. If the section
 // does not exist, NoSectionError is returned. If the property does not exist
@@ -114,7 +112,7 @@ func (c *Config) GetInt(section, property string) (value int, err error) {
 }
 
 // Gets the value of the given property in the given section and returns it as
-// a float32. 
+// a float32.
 func (c *Config) GetFloat32(section, property string) (value float32, err error) {
 	f := func(s string) (interface{}, error) {
 		value, err := strconv.ParseFloat(s, 32)
@@ -128,7 +126,7 @@ func (c *Config) GetFloat32(section, property string) (value float32, err error)
 }
 
 // Gets the value of the given property in the given section and returns it as
-// a float64. 
+// a float64.
 func (c *Config) GetFloat64(section, property string) (value float64, err error) {
 	f := func(s string) (interface{}, error) {
 		return strconv.ParseFloat(s, 64)
