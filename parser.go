@@ -1,10 +1,12 @@
 package ini
 
 import (
+	"bufio"
 	"bytes"
 	"errors"
 	"fmt"
 	"io"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -89,6 +91,16 @@ func NewConfig() *Config {
 //	ParseINI(NewLineReader(strings.NewReader(s)))
 func NewConfigFromString(s string) (*Config, error) {
 	return ParseINI(NewLineReader(strings.NewReader(s)))
+}
+
+// Create a new *Config from a file.
+func NewConfigFromFile(file *os.File) (*Config, error) {
+	return ParseINI(NewLineReader(bufio.NewReader(file)))
+}
+
+// Create a new *Config from a ByteReader.
+func NewConfigFromByteReader(reader io.ByteReader) (*Config, error) {
+	return ParseINI(NewLineReader(reader))
 }
 
 // Parse the given *LineReader to a *Config. If the reader is empty, an empty
