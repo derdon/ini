@@ -176,7 +176,7 @@ func TestConfigStringEmpty(t *testing.T) {
 }
 
 func TestConfigStringOneSection(t *testing.T) {
-	c, err := parseINI(newLineReader(strings.NewReader("[section]")))
+	c, err := NewConfigFromString("[section]")
 	assertErrorIsNil(err, t)
 	stringedConfig := c.String()
 	if expectedStr := "[section]"; stringedConfig != expectedStr {
@@ -185,8 +185,7 @@ func TestConfigStringOneSection(t *testing.T) {
 }
 
 func TestStringSectionWithItem(t *testing.T) {
-	filecontent := "[section]\nfoo	=bar"
-	c, err := parseINI(newLineReader(strings.NewReader(filecontent)))
+	c, err := NewConfigFromString("[section]\nfoo	=bar")
 	assertErrorIsNil(err, t)
 	expectedStr := "[section]\nfoo = bar"
 	if stringedConfig := c.String(); stringedConfig != expectedStr {
