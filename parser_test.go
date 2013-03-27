@@ -120,16 +120,14 @@ func TestParseItemWithEscapedEqualSign(t *testing.T) {
 // TODO: test parseItem with quoted values!
 
 func TestParseINIEmpty(t *testing.T) {
-	linereader := newLineReader(strings.NewReader(""))
-	config, err := parseINI(linereader)
+	config, err := NewConfigFromString("")
 	assertErrorIsNil(err, t)
 	expectedConfig := make(Config)
 	assertConfigMapsEqual(config, &expectedConfig, t)
 }
 
 func TestParseINIOneSection(t *testing.T) {
-	linereader := newLineReader(strings.NewReader("[section]"))
-	config, err := parseINI(linereader)
+	config, err := NewConfigFromString("[section]")
 	assertErrorIsNil(err, t)
 	section := make(map[string]string)
 	expectedConfig := &Config{"section": section}
@@ -137,9 +135,7 @@ func TestParseINIOneSection(t *testing.T) {
 }
 
 func TestParseINITwoSections(t *testing.T) {
-	fileContent := "[section one]\n[section two]"
-	linereader := newLineReader(strings.NewReader(fileContent))
-	config, err := parseINI(linereader)
+	config, err := NewConfigFromString("[section one]\n[section two]")
 	assertErrorIsNil(err, t)
 	sectionOne := make(map[string]string)
 	sectionTwo := make(map[string]string)
@@ -150,18 +146,14 @@ func TestParseINITwoSections(t *testing.T) {
 }
 
 func TestParseINISectionWithOneAssignment(t *testing.T) {
-	filecontent := "[section]\nproperty=value"
-	linereader := newLineReader(strings.NewReader(filecontent))
-	config, err := parseINI(linereader)
+	config, err := NewConfigFromString("[section]\nproperty=value")
 	assertErrorIsNil(err, t)
 	expectedConfig := &Config{"section": {"property": "value"}}
 	assertConfigMapsEqual(config, expectedConfig, t)
 }
 
 func TestParseINIAssignmentBeforeSection(t *testing.T) {
-	filecontent := "property=value\n[section]"
-	linereader := newLineReader(strings.NewReader(filecontent))
-	_, err := parseINI(linereader)
+	_, err := NewConfigFromString("property=value\n[section]")
 	assertErrorIsNotNil(err, t)
 	if err != AssignmentOutsideSectionError {
 		t.Errorf("expected AssignmentOutsideSectionError, got %v", err)
@@ -169,9 +161,7 @@ func TestParseINIAssignmentBeforeSection(t *testing.T) {
 }
 
 func TestParseINIBrokenAssignment(t *testing.T) {
-	filecontent := "[section]\nproperty value"
-	linereader := newLineReader(strings.NewReader(filecontent))
-	_, err := parseINI(linereader)
+	_, err := NewConfigFromString("[section]\nproperty value")
 	assertErrorIsNotNil(err, t)
 	if err != MissingEqualSignError {
 		t.Errorf("expected MissingEqualSignError, got %v", err)
