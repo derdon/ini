@@ -1,17 +1,12 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
+import "fmt"
 
 import "github.com/derdon/ini"
 
 func main() {
 	filecontent := "[my section]\nsome property = with a value"
-	reader := strings.NewReader(filecontent)
-	linereader := ini.NewLineReader(reader)
-	conf, err := ini.ParseINI(linereader)
+	conf, err := ini.NewConfigFromString(filecontent)
 	if err != nil {
 		errmsg := fmt.Sprintf("Error: could not parse ini file. %s", err)
 		panic(errmsg)
