@@ -81,26 +81,26 @@ func parseItem(line string) (item *Item, err error) {
 type Config map[string]map[string]string
 
 // Get a new empty config. This is equivalent to:
-// 	ParseINI(NewLineReader(strings.NewReader("")))
+// 	parseINI(NewLineReader(strings.NewReader("")))
 func NewConfig() *Config {
 	c := make(Config)
 	return &c
 }
 
 // Create a new *Config from a string. This is simply a shortcut for:
-//	ParseINI(NewLineReader(strings.NewReader(s)))
+//	parseINI(NewLineReader(strings.NewReader(s)))
 func NewConfigFromString(s string) (*Config, error) {
-	return ParseINI(newLineReader(strings.NewReader(s)))
+	return parseINI(newLineReader(strings.NewReader(s)))
 }
 
 // Create a new *Config from a file.
 func NewConfigFromFile(file *os.File) (*Config, error) {
-	return ParseINI(newLineReader(bufio.NewReader(file)))
+	return parseINI(newLineReader(bufio.NewReader(file)))
 }
 
 // Create a new *Config from a ByteReader.
 func NewConfigFromByteReader(reader io.ByteReader) (*Config, error) {
-	return ParseINI(newLineReader(reader))
+	return parseINI(newLineReader(reader))
 }
 
 // Parse the given *LineReader to a *Config. If the reader is empty, an empty
@@ -109,7 +109,7 @@ func NewConfigFromByteReader(reader io.ByteReader) (*Config, error) {
 // section was declared. Other errors are syntax errors: Examples for syntax
 // errors are: no equals sign in an assignment, more than one unescaped equal
 // sign in an assignment.
-func ParseINI(reader *lineReader) (*Config, error) {
+func parseINI(reader *lineReader) (*Config, error) {
 	conf := make(Config)
 	var line string
 	var err error
