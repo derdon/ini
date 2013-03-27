@@ -1,7 +1,9 @@
 package ini
 
 import (
+	"bytes"
 	"errors"
+	"fmt"
 	"io"
 	"regexp"
 	"strings"
@@ -124,4 +126,20 @@ func ParseINI(reader *LineReader) (*Config, error) {
 		}
 	}
 	return &conf, nil
+}
+
+func (c *Config) String() string {
+	buf := new(bytes.Buffer)
+	for _, section := range c.GetSections() {
+		buf.WriteString(fmt.Sprintf("[%s]\n", section))
+		// error can be ignored because the section surely exists
+		items, _ := c.GetItems(section)
+		for _, item := range items {
+			buf.WriteString(fmt.Sprintf("%s = %s\n", item.Property, item.Value))
+		}
+	}
+	// TODO: this looks inefficient and ugly. find some better way to cut of
+	// the last byte of buf
+	// remove trailing linebreak to be consistent with empty *Config values
+	return strings.TrimSpace(string(buf.Bytes()))
 }

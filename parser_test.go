@@ -177,3 +177,29 @@ func TestParseINIBrokenAssignment(t *testing.T) {
 		t.Errorf("expected MissingEqualSignError, got %v", err)
 	}
 }
+
+func TestConfigStringEmpty(t *testing.T) {
+	stringedConfig := NewConfig().String()
+	if expectedStr := ""; stringedConfig != expectedStr {
+		t.Errorf("expected %q, got %q", expectedStr, stringedConfig)
+	}
+}
+
+func TestConfigStringOneSection(t *testing.T) {
+	c, err := ParseINI(NewLineReader(strings.NewReader("[section]")))
+	assertErrorIsNil(err, t)
+	stringedConfig := c.String()
+	if expectedStr := "[section]"; stringedConfig != expectedStr {
+		t.Errorf("expected %q, got %q", expectedStr, stringedConfig)
+	}
+}
+
+func TestStringSectionWithItem(t *testing.T) {
+	filecontent := "[section]\nfoo	=bar"
+	c, err := ParseINI(NewLineReader(strings.NewReader(filecontent)))
+	assertErrorIsNil(err, t)
+	expectedStr := "[section]\nfoo = bar"
+	if stringedConfig := c.String(); stringedConfig != expectedStr {
+		t.Errorf("expected %q, got %q", expectedStr, stringedConfig)
+	}
+}
