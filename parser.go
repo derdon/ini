@@ -147,6 +147,12 @@ func parseINI(reader *lineReader) (*Config, error) {
 	return &conf, nil
 }
 
+// Return a normalized representation of the config. The order of sections and
+// the order of assignments within each section is non-deterministic. Each
+// section declaration begins with an open bracket [ and end with a closing
+// bracket ] plus a newline \n. An Assignment starts with a property, followed
+// by an equal sign which is enclosed in spaces and ends with a value and a
+// newline.
 func (c *Config) String() string {
 	buf := new(bytes.Buffer)
 	for _, section := range c.GetSections() {
