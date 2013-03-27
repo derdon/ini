@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
+import "fmt"
 
 import "github.com/derdon/ini"
 
@@ -14,8 +11,7 @@ sense of life = 42
 sqrt of two = 1.41421356237
 is this a boolean = true
 `
-	linereader := ini.NewLineReader(strings.NewReader(filecontent))
-	conf, err := ini.ParseINI(linereader)
+	conf, err := ini.NewConfigFromString(filecontent)
 	if err != nil {
 		panic(err)
 	}

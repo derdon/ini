@@ -10,7 +10,7 @@ import "github.com/derdon/ini"
 func parseCommaSeperatedList(s string) (interface{}, error) {
 	values := []string{}
 	for _, value := range strings.Split(s, ",") {
-	    values = append(values, strings.TrimSpace(value))
+		values = append(values, strings.TrimSpace(value))
 	}
 	return values, nil
 }
@@ -18,8 +18,7 @@ func parseCommaSeperatedList(s string) (interface{}, error) {
 func main() {
 	filecontent := `[section]
 fruits = apples, bananas, pears`
-	linereader := ini.NewLineReader(strings.NewReader(filecontent))
-	conf, err := ini.ParseINI(linereader)
+	conf, err := ini.NewConfigFromString(filecontent)
 	if err != nil {
 		panic(err)
 	}

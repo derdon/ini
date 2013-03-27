@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
+import "fmt"
 
 import "github.com/derdon/ini"
 
@@ -11,8 +8,7 @@ func main() {
 	filecontent := `[section one]
 [another section]
 foo = bar`
-	linereader := ini.NewLineReader(strings.NewReader(filecontent))
-	conf, err := ini.ParseINI(linereader)
+	conf, err := ini.NewConfigFromString(filecontent)
 	if err != nil {
 		panic(err)
 	}
