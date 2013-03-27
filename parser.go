@@ -85,6 +85,12 @@ func NewConfig() *Config {
 	return &c
 }
 
+// Create a new *Config from a string. This is simply a shortcut for:
+//	ParseINI(NewLineReader(strings.NewReader(s)))
+func NewConfigFromString(s string) (*Config, error) {
+	return ParseINI(NewLineReader(strings.NewReader(s)))
+}
+
 // Parse the given *LineReader to a *Config. If the reader is empty, an empty
 // *Config and no error will be returned. Errors may occur when one assignment
 // does not belong to any section, i.e. if it was written before the first
