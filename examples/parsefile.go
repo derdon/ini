@@ -18,5 +18,5 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("Error: could not parse ini file. %s", err))
 	}
-	fmt.Printf("%#v\n", *conf)
+	fmt.Println(conf)
 }
