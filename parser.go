@@ -87,15 +87,16 @@ func NewConfig() *Config {
 	return &c
 }
 
-// Create a new *Config from a string. This is simply a shortcut for:
-//	parseINI(NewLineReader(strings.NewReader(s)))
+// Create a new *Config from a string. This is a shortcut for:
+//	NewConfigFromByteReader(strings.NewReader(s))
 func NewConfigFromString(s string) (*Config, error) {
-	return parseINI(newLineReader(strings.NewReader(s)))
+	return NewConfigFromByteReader(strings.NewReader(s))
 }
 
-// Create a new *Config from a file.
+// Create a new *Config from a file. This is a shortcut for:
+//	NewConfigFromByteReader(bufio.NewReader(file))
 func NewConfigFromFile(file *os.File) (*Config, error) {
-	return parseINI(newLineReader(bufio.NewReader(file)))
+	return NewConfigFromByteReader(bufio.NewReader(file))
 }
 
 // Create a new *Config from a ByteReader.
