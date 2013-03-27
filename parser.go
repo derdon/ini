@@ -18,19 +18,19 @@ var TooManyEqualSignsError = errors.New("too many equal signs")
 
 var assignmentPattern = regexp.MustCompile("[^\\\\]=")
 
-type LineReader struct {
+type lineReader struct {
 	io.ByteReader
 }
 
 // create a new LineReader struct from any given io.ByteReader
-func NewLineReader(r io.ByteReader) *LineReader {
-	return &LineReader{r}
+func newLineReader(r io.ByteReader) *lineReader {
+	return &lineReader{r}
 }
 
 // Read bytes from the given LineReader until a newline occurs. If the reader
 // contains no newlines, its whole content is returned. If the reader is empty,
 // i.e. contains no bytes at all, the empty string and no error is returned.
-func (r *LineReader) ReadLine() (line string, err error) {
+func (r *lineReader) ReadLine() (line string, err error) {
 	var bytes []byte
 	var b byte
 	for b != newline {
@@ -90,17 +90,17 @@ func NewConfig() *Config {
 // Create a new *Config from a string. This is simply a shortcut for:
 //	ParseINI(NewLineReader(strings.NewReader(s)))
 func NewConfigFromString(s string) (*Config, error) {
-	return ParseINI(NewLineReader(strings.NewReader(s)))
+	return ParseINI(newLineReader(strings.NewReader(s)))
 }
 
 // Create a new *Config from a file.
 func NewConfigFromFile(file *os.File) (*Config, error) {
-	return ParseINI(NewLineReader(bufio.NewReader(file)))
+	return ParseINI(newLineReader(bufio.NewReader(file)))
 }
 
 // Create a new *Config from a ByteReader.
 func NewConfigFromByteReader(reader io.ByteReader) (*Config, error) {
-	return ParseINI(NewLineReader(reader))
+	return ParseINI(newLineReader(reader))
 }
 
 // Parse the given *LineReader to a *Config. If the reader is empty, an empty
@@ -109,7 +109,7 @@ func NewConfigFromByteReader(reader io.ByteReader) (*Config, error) {
 // section was declared. Other errors are syntax errors: Examples for syntax
 // errors are: no equals sign in an assignment, more than one unescaped equal
 // sign in an assignment.
-func ParseINI(reader *LineReader) (*Config, error) {
+func ParseINI(reader *lineReader) (*Config, error) {
 	conf := make(Config)
 	var line string
 	var err error
