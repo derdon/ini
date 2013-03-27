@@ -1,6 +1,7 @@
 package ini
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 )
@@ -191,4 +192,12 @@ func TestStringSectionWithItem(t *testing.T) {
 	if stringedConfig := c.String(); stringedConfig != expectedStr {
 		t.Errorf("expected %q, got %q", expectedStr, stringedConfig)
 	}
+}
+
+func ExampleConfig_String() {
+	conf, _ := NewConfigFromString("[section]\n\tfoo 	\t	= bar  	")
+	fmt.Println(conf)
+	// Output:
+	// [section]
+	// foo = bar
 }
