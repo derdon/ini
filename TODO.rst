@@ -11,5 +11,4 @@ TO DO
 
 - support quoted values
 
-- support control characters in values:
-    \\ \t \r \n \; \# \= \:
+- support control characters in values: ``\\ \t \r \n \; \# \= \:``
