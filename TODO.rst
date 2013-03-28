@@ -5,7 +5,7 @@ TO DO
   which are allowed and show examples for non-allowed formats, i.e. syntax
   errors
 
-- support notonly =, but also : for property value pairs
+- support not only =, but also : for property value pairs
 
 - support comments, ; and #
 
