@@ -133,6 +133,11 @@ func parseINI(reader *lineReader) (*Config, error) {
 			break
 		}
 		trimmedLine := strings.TrimSpace(line)
+		// ignore lines beginning with # or ;
+		firstCharacter = trimmedLine[0]
+		if firstCharacter == '#' || firstCharacter == ';' {
+			continue
+		}
 		if isSection(trimmedLine) {
 			section = strings.Trim(trimmedLine, "[]")
 			conf.AddSection(section)
