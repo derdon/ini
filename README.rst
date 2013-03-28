@@ -26,4 +26,5 @@ The API documentation can be found at http://godoc.org/github.com/derdon/ini.
 Bugs
 ----
 
-Quoted values and comments are not supported yet.
+Quoted values and comments are not supported yet. See TODO.rst in this
+folder for more ideas which have not been implemented yet.
