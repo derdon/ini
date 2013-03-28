@@ -81,7 +81,7 @@ func parseItem(line string) (item *Item, err error) {
 type Config map[string]map[string]string
 
 // Get a new empty config. This is equivalent to:
-// 	parseINI(NewLineReader(strings.NewReader("")))
+// 	NewConfigFromString("")
 func NewConfig() *Config {
 	c := make(Config)
 	return &c
