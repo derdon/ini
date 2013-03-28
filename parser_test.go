@@ -115,10 +115,27 @@ func TestParseItemWithEscapedEqualSign(t *testing.T) {
 	item, err := parseItem(line)
 	assertErrorIsNil(err, t)
 	expectProperty("foo", item.Property, t)
-	expectValue("bar \\= baz", item.Value, t)
+	expectValue("bar = baz", item.Value, t)
+}
+
+func TestParseItemWithTab(t *testing.T) {
+	line := "foo = bar \\t baz"
+	item, err := parseItem(line)
+	assertErrorIsNil(err, t)
+	expectProperty("foo", item.Property, t)
+	expectValue("bar \t baz", item.Value, t)
+}
+
+func TestParseItemWithNewline(t *testing.T) {
+	line := "foo = bar \\n baz"
+	item, err := parseItem(line)
+	assertErrorIsNil(err, t)
+	expectProperty("foo", item.Property, t)
+	expectValue("bar \n baz", item.Value, t)
 }
 
 // TODO: test parseItem with quoted values!
+func TestParseItemWithDoubleQuotes(t *testing.T) {}
 
 func TestParseINIEmpty(t *testing.T) {
 	config, err := NewConfigFromString("")

@@ -73,6 +73,14 @@ func parseItem(line string) (item *Item, err error) {
 	loc := matches[0]
 	property := strings.TrimSpace(line[:loc[0]+1])
 	value := strings.TrimSpace(line[loc[1]:])
+	// TODO: use a seperate function for translating escaped control characters
+	// to real control characters
+	// replace all \= by =
+	value = strings.Replace(value, "\\=", "=", -1)
+	// replace all \\t by \t
+	value = strings.Replace(value, "\\t", "\t", -1)
+	// replace all \\n by \n
+	value = strings.Replace(value, "\\n", "\n", -1)
 	item = &Item{property, value}
 	return
 }
