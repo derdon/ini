@@ -144,6 +144,20 @@ func TestParseINIEmpty(t *testing.T) {
 	assertConfigMapsEqual(config, &expectedConfig, t)
 }
 
+func TestParseINIComments(t *testing.T) {
+	examples := []string{
+		"; a little comment passing by",
+		"	  ;this one starts with some whitespace",
+		"# with a hash",
+		" 	 	 # whitespace plus hash"}
+	expectedConfig := make(Config)
+	for _, input := range examples {
+		config, err := NewConfigFromString(input)
+		assertErrorIsNil(err, t)
+		assertConfigMapsEqual(config, &expectedConfig, t)
+	}
+}
+
 func TestParseINIOneSection(t *testing.T) {
 	config, err := NewConfigFromString("[section]")
 	assertErrorIsNil(err, t)
