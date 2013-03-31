@@ -134,7 +134,7 @@ func parseINI(reader *lineReader) (*Config, error) {
 		}
 		trimmedLine := strings.TrimSpace(line)
 		// ignore lines beginning with # or ;
-		firstCharacter = trimmedLine[0]
+		firstCharacter := trimmedLine[0]
 		if firstCharacter == '#' || firstCharacter == ';' {
 			continue
 		}
