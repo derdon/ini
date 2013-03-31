@@ -79,6 +79,8 @@ func parseItem(line string) (item *Item, err error) {
 	value = strings.Replace(value, "\\=", "=", -1)
 	// replace all \\t by \t
 	value = strings.Replace(value, "\\t", "\t", -1)
+	// replace all \\r by \r
+	value = strings.Replace(value, "\\r", "\r", -1)
 	// replace all \\n by \n
 	value = strings.Replace(value, "\\n", "\n", -1)
 	// replace all \\\\ by \\

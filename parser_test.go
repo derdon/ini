@@ -126,6 +126,14 @@ func TestParseItemWithTab(t *testing.T) {
 	expectValue("bar \t baz", item.Value, t)
 }
 
+func TestParseItemWithCarriageReturn(t *testing.T) {
+	line := "foo = bar \\r baz"
+	item, err := parseItem(line)
+	assertErrorIsNil(err, t)
+	expectProperty("foo", item.Property, t)
+	expectValue("bar \r baz", item.Value, t)
+}
+
 func TestParseItemWithNewline(t *testing.T) {
 	line := "foo = bar \\n baz"
 	item, err := parseItem(line)
