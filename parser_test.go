@@ -134,6 +134,14 @@ func TestParseItemWithNewline(t *testing.T) {
 	expectValue("bar \n baz", item.Value, t)
 }
 
+func TestParseItemWithEscapedBackslash(t *testing.T) {
+	line := "foo = bar \\\\ baz"
+	item, err := parseItem(line)
+	assertErrorIsNil(err, t)
+	expectProperty("foo", item.Property, t)
+	expectValue("bar \\ baz", item.Value, t)
+}
+
 // TODO: test parseItem with quoted values!
 func TestParseItemWithDoubleQuotes(t *testing.T) {}
 
