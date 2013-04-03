@@ -6,6 +6,11 @@ import (
 	"testing"
 )
 
+type tests []struct{
+	in string
+	out string
+}
+
 func assertIsSection(sectionName string, t *testing.T) {
 	if !isSection(sectionName) {
 		t.Errorf("%q is not a valid section name", sectionName)
@@ -74,6 +79,29 @@ func TestIsSectionOneLetterName(t *testing.T) {
 
 func TestIsSectionValid(t *testing.T) {
 	assertIsSection("[validsection]", t)
+}
+
+func TestUnescapeControlCharactersEscaped(t *testing.T) {
+	var unescapeTests = tests{
+		{`a\rb`, "a\rb"},
+		{`c\nd`, "c\nd"},
+		{`e\tf`, "e\tf"},
+		{`g\=h`, "g=h"},
+		{`k\\l`, `k\l`}}
+	var unescapedValue string
+	for _, test := range unescapeTests {
+		unescapedValue = unescapeControlCharacters(test.in)
+		if unescapedValue != test.out {
+			t.Errorf("expected %q, got %q", test.out, unescapedValue)
+		}
+	}
+}
+
+func TestUnescapeControlCharactersUnsupportedEscape(t *testing.T) {
+	unescapedValue := unescapeControlCharacters(`\#`)
+	if unescapedValue != `\#` {
+		t.Errorf(`expected \#, got %q`, unescapedValue)
+	}
 }
 
 func TestParseItemEmptyString(t *testing.T) {

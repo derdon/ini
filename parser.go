@@ -59,6 +59,33 @@ type Item struct {
 	Value    string
 }
 
+// Convert escaped control characters to their unescaped form. Additionally,
+// convert \= to = to allow equal signs within values.
+// Specifically, this function performs the following conversions:
+//    \\\\    ->    \\
+//     \\0    ->    \0
+//     \\a    ->    \a
+//     \\b    ->    \b
+//     \\t    ->    \t
+//     \\r    ->    \r
+//     \\n    ->    \n
+//      \=    ->    =
+func unescapeControlCharacters(value string) string {
+	var replacements = map[string]string{
+		`\\`: `\`,
+		`\0`: "\0",
+		`\a`: "\a",
+		`\b`: "\b",
+		`\t`: "\t",
+		`\r`: "\r",
+		`\n`: "\n",
+		`\=`: "="}
+	for old, new := range replacements {
+		value = strings.Replace(value, old, new, -1)
+	}
+	return value
+}
+
 // An assignment is of the form `name=value`. Whitespace before and after the
 // equal sign is ignored. Equals signs within the value must be quoted or
 // escaped with the backslash.
@@ -73,18 +100,7 @@ func parseItem(line string) (item *Item, err error) {
 	loc := matches[0]
 	property := strings.TrimSpace(line[:loc[0]+1])
 	value := strings.TrimSpace(line[loc[1]:])
-	// TODO: use a seperate function for translating escaped control characters
-	// to real control characters
-	// replace all \= by =
-	value = strings.Replace(value, "\\=", "=", -1)
-	// replace all \\t by \t
-	value = strings.Replace(value, "\\t", "\t", -1)
-	// replace all \\r by \r
-	value = strings.Replace(value, "\\r", "\r", -1)
-	// replace all \\n by \n
-	value = strings.Replace(value, "\\n", "\n", -1)
-	// replace all \\\\ by \\
-	value = strings.Replace(value, "\\\\", "\\", -1)
+	value = unescapeControlCharacters(value)
 	item = &Item{property, value}
 	return
 }
