@@ -73,7 +73,7 @@ type Item struct {
 func unescapeControlCharacters(value string) string {
 	var replacements = map[string]string{
 		`\\`: `\`,
-		`\0`: "\0",
+		`\0`: "\x00",
 		`\a`: "\a",
 		`\b`: "\b",
 		`\t`: "\t",
