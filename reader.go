@@ -66,6 +66,17 @@ func (c *Config) Get(section, property string) (value string, err error) {
 	return value, NoPropertyError{property}
 }
 
+// Get the value of the passed property in the given section. If either the
+// section doesn't exist or the property doesn't exist in the given section,
+// the given default value `default_` is returned.
+func (c *Config) GetDefault(section, property, default_ string) (value string) {
+	value, err := c.Get(section, property)
+	if err != nil {
+		value = default_
+	}
+	return value
+}
+
 // Get the value of the passed property in the given section, apply the given
 // function f to it and return the function's return values. The function must
 // have the signature ``func(s string) (value interface{}, err error)``. If the
