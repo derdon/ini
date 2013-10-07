@@ -127,6 +127,16 @@ func NewConfigFromFile(file *os.File) (*Config, error) {
 	return NewConfigFromByteReader(bufio.NewReader(file))
 }
 
+// Create a new *Config by a filename.
+func NewConfigFromFilename(filename) (*Config, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return new(Config), err
+	}
+	defer file.Close()
+	return ini.NewConfigFromFile(file)
+}
+
 // Create a new *Config from a ByteReader.
 func NewConfigFromByteReader(reader io.ByteReader) (*Config, error) {
 	return parseINI(newLineReader(reader))
