@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-type tests []struct{
-	in string
+type tests []struct {
+	in  string
 	out string
 }
 
