@@ -15,9 +15,9 @@ var NoSectionError = errors.New(
 	"attempted to set a property on a section which does not exist")
 
 type NoPropertyError struct {
-	property string
+	Property string
 }
 
 func (error NoPropertyError) Error() string {
-	return fmt.Sprintf("No such property %q", error.property)
+	return fmt.Sprintf("No such property %q", error.Property)
 }
