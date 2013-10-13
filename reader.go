@@ -30,7 +30,7 @@ func (c *Config) HasProperty(section, property string) bool {
 // Note: the order is not deterministic!
 func (c *Config) GetSections() (sections []string) {
 	sections = []string{}
-	for section, _ := range *c {
+	for section := range *c {
 		sections = append(sections, section)
 	}
 	return sections
